@@ -1,6 +1,19 @@
 const express = require('express');
 const abc = require('../introduction/intro')
 const router = express.Router();
+const entertainment = require('../movies')
+
+router.get('/movies',function(req,res){
+    console.log("List of good movies: ",entertainment.hits())
+    res.send('Feel Good Movies')
+})
+
+router.get('/films',function(req,res){
+    console.log("particular movie: ",entertainment.feelGood())
+    res.send('second')
+})
+
+// ----------------------------------------------------------------------------------------------------------------------------
 
 router.get('/test-me', function (req, res) {
     console.log('My batch is', abc.name)
@@ -30,6 +43,7 @@ router.get('/students/:studentName', function(req, res){
     console.log("The path params in the request are : ", myParams)
     res.send('The full name is ' + myParams.studentName )
 })
+
 
 // Example 2 for path params
 router.get('/student-details/:name', function(req, res){
