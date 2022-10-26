@@ -8,7 +8,46 @@ const createBook= async function (req, res) {
     res.send({msg: savedData})
 }
 
-const getBooksData= async function (req, res) {
+// const createBook1= async function (req, res) {
+//     let eys = await BookModel.find().count()
+//     res.send({msg: eys})
+// }
+
+// Q) bookList : gives all the books- their bookName and authorName only 
+const bookList = async function (req, res) {
+    let specificKeys = await BookModel.find().select({bookName: 1,authorName:1, _id:0 })
+    res.send({msg: specificKeys})
+}
+
+// Q) getBooksInYear: takes year as input in post request and gives list of all books published that year
+const getBooksInYear = async function (req, res) {
+    let year = req.body
+    let publishedBooks = await BookModel.find(year)
+    res.send({msg: publishedBooks})
+}
+
+// Q)getParticularBooks:- take any input and use it as a condition to fetch books that satisfy that condition
+const getParticularBooks = async function (req, res) {
+    let anyInput = await BookModel.find({year:2000})
+    res.send({msg: anyInput })
+}
+
+// Q) getXINRBooks- request to return all books who have an Indian price tag of “100INR” or “200INR” or “500INR” 
+
+const getXINRBooks = async function (req, res) {
+    let indianRup = await BookModel.find({  "price.indianPrice" : {$in:['100INR','200INR','500INR']}  })
+    res.send({msg: indianRup })
+}
+
+// Q) getRandomBooks - returns books that are available in stock or have more than 500 pages 
+
+const getRandomBooks = async function (req, res) {
+    let stockAvail = await BookModel.find({$or:[{stockAvailable: true},{totalPages: { $gt: 500} }]})
+    res.send({msg: stockAvail})
+}
+
+
+// const getBooksData= async function (req, res) {
 
     // let allBooks= await BookModel.find( ).count() // COUNT
 
@@ -65,7 +104,7 @@ const getBooksData= async function (req, res) {
     
     // ASYNC AWAIT
     
-    let a= 2+4
+   /* let a= 2+4
     a= a + 10
     console.log(a)
     let allBooks= await BookModel.find( )  //normally this is an asynchronous call..but await makes it synchronous
@@ -78,8 +117,13 @@ const getBooksData= async function (req, res) {
     b= b+ 10
     console.log(b)
     res.send({msg: allBooks})
-}
+} */
 
 
+// module.exports.createBook1= createBook1
 module.exports.createBook= createBook
-module.exports.getBooksData= getBooksData
+module.exports.bookList= bookList
+module.exports.getBooksInYear= getBooksInYear
+module.exports.getParticularBooks= getParticularBooks
+module.exports.getXINRBooks= getXINRBooks
+module.exports.getRandomBooks= getRandomBooks
