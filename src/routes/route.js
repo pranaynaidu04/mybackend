@@ -190,7 +190,7 @@ let persons= [
  }
  ]
 
- router.post('/eligibility',function(req,res){
+ router.post('/eligibility',function(req,res){ //localhost:3000/eligibility?votingAge=18
     let votingAge = req.query.votingAge
     const updatedList = []
 
