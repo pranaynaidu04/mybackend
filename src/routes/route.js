@@ -71,7 +71,9 @@ const router = express.Router();
 //     res.send(  { msg: arr , status: true }  )
 // })
 // -------------------------------------------------------------------------------------------------
-// Q)
+// Q)Write a POST /players api that saves a player’s details and doesn’t allow saving the data of a player with a name that already exists in the data
+
+
 
 let players =
     [
@@ -103,18 +105,32 @@ let players =
             ]
         },
     ]
-
     router.post('/players', function (req, res) {
-        const playerBio = players.find(player => player.name === body.name)
-
-        if(playerBio){
-            return res.send({message: "player already exists"})
-        }else{
-            players.push(body)
-            return res.send( { players: players } )
+    
+        let newPlayer = req.body
+        let newPlayersName = newPlayer.name
+        let isNameRepeated = false
+    
+        //let player = players.find(p => p.name == newPlayersName)
+    
+        for(let i = 0; i < players.length; i++) {
+            if(players[i].name == newPlayersName) {
+                isNameRepeated = true;
+                break;
+            }
         }
-        
-        })
+    
+        //undefined is same as false/ a falsy value
+        if (isNameRepeated) {
+            //Player exists
+            res.send("This player was already added!")
+        } else {
+            //New entry
+            players.push(newPlayer)
+            res.send(players)
+        }
+    });
+    
         
 
 
