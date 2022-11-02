@@ -1,4 +1,44 @@
-const express = require('express');
+const express = require('express')
+const router = express.Router();
+const bookController = require('../controllers/bookController')
+const authorController = require('../controllers/authorController')
+
+router.post('/createBook',bookController.createBook)
+
+router.post('/createAuthor',authorController.createAuthor)
+
+router.get('/getAuthor',authorController.getAuthor)
+
+router.get('/updatedPrice',authorController.updatedPrice)
+
+
+
+
+
+
+
+
+
+
+
+module.exports=router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*const express = require('express');
 const router = express.Router();
 // const UserModel= require("../models/userModel.js")
 const UserController= require("../controllers/userController")
@@ -38,4 +78,4 @@ router.get("/dateManipulations", function (req, res) {
     res.send({ msg: "all good"})
 })
 
-module.exports = router;
+module.exports = router;*/
